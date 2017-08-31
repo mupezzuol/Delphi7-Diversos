@@ -1,0 +1,142 @@
+-- MySQL Administrator dump 1.4
+--
+-- ------------------------------------------------------
+-- Server version	5.0.51b-community-nt
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+--
+-- Create schema estoque_teste
+--
+
+CREATE DATABASE IF NOT EXISTS estoque_teste;
+USE estoque_teste;
+
+--
+-- Definition of table `tbl_estoque`
+--
+
+DROP TABLE IF EXISTS `tbl_estoque`;
+CREATE TABLE `tbl_estoque` (
+  `idtbl_estoque` int(10) unsigned NOT NULL auto_increment,
+  `cmp_coditem` int(10) unsigned NOT NULL,
+  `cmp_qtdest` int(10) unsigned NOT NULL,
+  `cmp_numdoc` varchar(10) NOT NULL,
+  `cmp_descricao` varchar(45) NOT NULL,
+  PRIMARY KEY  (`idtbl_estoque`),
+  KEY `FK_itens` (`cmp_coditem`),
+  CONSTRAINT `FK_itens` FOREIGN KEY (`cmp_coditem`) REFERENCES `tbl_itens` (`idtbl_itens`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_estoque`
+--
+
+/*!40000 ALTER TABLE `tbl_estoque` DISABLE KEYS */;
+INSERT INTO `tbl_estoque` (`idtbl_estoque`,`cmp_coditem`,`cmp_qtdest`,`cmp_numdoc`,`cmp_descricao`) VALUES 
+ (1,4,102,'1111','ARRUELA'),
+ (2,3,504,'1050','PARAFUSO');
+/*!40000 ALTER TABLE `tbl_estoque` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tbl_histestoque`
+--
+
+DROP TABLE IF EXISTS `tbl_histestoque`;
+CREATE TABLE `tbl_histestoque` (
+  `idtbl_histestoque` int(10) unsigned NOT NULL auto_increment,
+  `cmp_usuario` varchar(10) NOT NULL,
+  `cmp_descitem` varchar(20) NOT NULL,
+  `cmp_qtd` int(10) unsigned NOT NULL,
+  `cmp_data` date NOT NULL,
+  `cmp_hora` time NOT NULL,
+  `cmp_numdoc` varchar(20) NOT NULL,
+  `cmp_qtdatual` int(10) unsigned NOT NULL,
+  `cmp_tipo` varchar(20) NOT NULL,
+  `cmp_ajuste` varchar(45) NOT NULL,
+  PRIMARY KEY  (`idtbl_histestoque`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_histestoque`
+--
+
+/*!40000 ALTER TABLE `tbl_histestoque` DISABLE KEYS */;
+INSERT INTO `tbl_histestoque` (`idtbl_histestoque`,`cmp_usuario`,`cmp_descitem`,`cmp_qtd`,`cmp_data`,`cmp_hora`,`cmp_numdoc`,`cmp_qtdatual`,`cmp_tipo`,`cmp_ajuste`) VALUES 
+ (1,'samuel','ARRUELA',10,'2014-04-28','20:11:10','1111',0,'ENTRADA',''),
+ (2,'samuel','ARRUELA',9284,'2014-04-28','20:15:03','1111',10,'ENTRADA',''),
+ (3,'samuel','PARAFUSO',1000,'2014-04-28','20:17:37','1050',0,'ENTRADA',''),
+ (4,'samuel','PORCA',10,'2014-04-28','20:19:08','1000',0,'SAIDA',''),
+ (5,'samuel','PARAFUSO',500,'2014-04-28','20:20:02','1090',1000,'SAIDA',''),
+ (6,'samuel','PARAFUSO',2,'2014-04-28','20:26:48','750',502,'ENTRADA','item a mais no estoque'),
+ (7,'samuel','ARRUELA',9194,'2014-04-28','20:27:37','751',9294,'SAIDA','item a menos no estoque'),
+ (8,'samuel','ARRUELA',2,'2014-04-29','19:05:14','123',100,'ENTRADA','');
+/*!40000 ALTER TABLE `tbl_histestoque` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tbl_itens`
+--
+
+DROP TABLE IF EXISTS `tbl_itens`;
+CREATE TABLE `tbl_itens` (
+  `idtbl_itens` int(10) unsigned NOT NULL auto_increment,
+  `cmp_descricao` varchar(45) NOT NULL,
+  `cmp_tipo` varchar(20) NOT NULL,
+  PRIMARY KEY  (`idtbl_itens`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_itens`
+--
+
+/*!40000 ALTER TABLE `tbl_itens` DISABLE KEYS */;
+INSERT INTO `tbl_itens` (`idtbl_itens`,`cmp_descricao`,`cmp_tipo`) VALUES 
+ (2,'PORCA','FABRICADO'),
+ (3,'PARAFUSO','COMPRADO'),
+ (4,'ARRUELA','IMPORTADO');
+/*!40000 ALTER TABLE `tbl_itens` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tbl_login`
+--
+
+DROP TABLE IF EXISTS `tbl_login`;
+CREATE TABLE `tbl_login` (
+  `idlogin` int(10) unsigned NOT NULL auto_increment,
+  `cmp_nome` varchar(10) NOT NULL,
+  `cmp_senha` varchar(10) NOT NULL,
+  PRIMARY KEY  (`idlogin`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_login`
+--
+
+/*!40000 ALTER TABLE `tbl_login` DISABLE KEYS */;
+INSERT INTO `tbl_login` (`idlogin`,`cmp_nome`,`cmp_senha`) VALUES 
+ (1,'samuel','123'),
+ (2,'joaquim','234');
+/*!40000 ALTER TABLE `tbl_login` ENABLE KEYS */;
+
+
+
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
